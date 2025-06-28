@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
-import tasks from './routes/task';
+import project from './routes/project';
+import task from './routes/task';
 
 const app = express();
 const PORT: number = 3000;
@@ -13,6 +14,7 @@ app.get('/', (req: any, res: any) => {
     console.log(req);
     res.render('index');
 });
-app.use('/tasks', tasks);
+app.use('/projects', project);
+app.use('/tasks', task);
 
 app.listen(PORT, () => console.log(`server listening on port ${PORT}`));
