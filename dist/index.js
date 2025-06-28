@@ -1,0 +1,16 @@
+"use strict";
+const express = require('express');
+const path = require('path');
+const tasks = require('./routes/task');
+const app = express();
+const PORT = 3000;
+app.set('view engine', 'pug');
+console.log(__dirname);
+app.set('views', path.join(__dirname, 'views'));
+app.get('/', (req, res) => {
+    console.log(req);
+    res.render('index');
+});
+app.use('/tasks', tasks);
+app.listen(PORT, () => console.log(`server listening on port ${PORT}`));
+//# sourceMappingURL=index.js.map

@@ -1,7 +1,7 @@
 const TASKS = [
     {
         id: 1,
-        name: 'Gova'
+        name: 'Govass'
     },
     {
         id: 2,
@@ -9,8 +9,8 @@ const TASKS = [
     }
 ];
 
-const getTasks = (req, res) => {
+const getTasks = (req: any, res: any) => {
     res.status(200).json(TASKS);
 };
 
-module.exports = getTasks;
+export default getTasks;
