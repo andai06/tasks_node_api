@@ -1,5 +1,5 @@
-import {Request, Response} from 'express';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const task1 = {
     id: 1,
     title: 'Task 1',
@@ -7,9 +7,7 @@ const task1 = {
     priority: 1,
     end_date: new Date(),
     status: 'TODO'
-
 };
-
 const PROJECTS = [
     {
         id: 1,
@@ -19,9 +17,8 @@ const PROJECTS = [
         tasks: [task1]
     }
 ];
-
-const getProjects = (req: Request, res: Response) => {
+const getProjects = (req, res) => {
     res.status(200).send(PROJECTS);
 };
-
-export default getProjects;
+exports.default = getProjects;
+//# sourceMappingURL=project.js.map

@@ -1,3 +1,5 @@
+import {Request, Response} from 'express';
+
 const TASKS = [
     {
         id: 1,
@@ -9,7 +11,7 @@ const TASKS = [
     }
 ];
 
-const getTasks = (req: any, res: any) => {
+const getTasks = (req: Request, res: Response) => {
     res.status(200).json(TASKS);
 };
 
