@@ -1,6 +1,6 @@
 // src/middleware/authMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwUtils';
+import { verifyToken } from '../utils/jwt';
 
 // Étendre l'interface Request d'Express pour y ajouter l'utilisateur décodé
 declare global {
