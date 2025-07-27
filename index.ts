@@ -11,6 +11,8 @@ const PORT: number = 3000;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
 const someOtherPlaintextPassword = 'not_bacon';
 
+process.env.jwtSecret = 'FSDeghFQDy';
+console.log(process.env);
 
 app.set('view engine', 'pug');
 console.log(__dirname);
