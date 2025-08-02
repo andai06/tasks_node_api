@@ -4,6 +4,7 @@ import path from 'path';
 import project from './routes/project';
 import task from './routes/task';
 import register from './routes/register';
+import login from './routes/login';
 
 const app = express();
 const PORT: number = 3000;
@@ -24,5 +25,6 @@ app.get('/', (req: any, res: any) => {
 app.use('/projects', project);
 app.use('/tasks', task);
 app.use('/register', register);
+app.use('/login', login);
 
 app.listen(PORT, () => console.log(`server listening on port ${PORT}`));
