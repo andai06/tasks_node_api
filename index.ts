@@ -3,26 +3,26 @@ import path from 'path';
 
 import project from './routes/project';
 import task from './routes/task';
-import {comparePassword, hashPassword} from './utils/password';
+import register from './routes/register';
 
 const app = express();
 const PORT: number = 3000;
 
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
-
-process.env.jwtSecret = 'FSDeghFQDy';
-console.log(process.env);
-
 app.set('view engine', 'pug');
-console.log(__dirname);
+console.log('dirname', path.join(__dirname, 'views'));
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 app.get('/', (req: any, res: any) => {
-    console.log(req);
     res.render('index');
 });
+
+
 app.use('/projects', project);
 app.use('/tasks', task);
+app.use('/register', register);
 
 app.listen(PORT, () => console.log(`server listening on port ${PORT}`));

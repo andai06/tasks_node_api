@@ -1,7 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 
 process.env.jwtSecret = 'FSDeghFQDy';
-console.log(process.env);
 
 const JWT_SECRET = process.env.jwtSecret;
 const JWT_EXPIRATION = "1h";
