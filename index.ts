@@ -1,11 +1,14 @@
 import express from 'express';
 import path from 'path';
+import dotenv from "dotenv";
 
 import project from './routes/project';
 import task from './routes/task';
 import register from './routes/register';
 import login from './routes/login';
 import { authMiddleware } from './middleware/authMiddleware';
+
+dotenv.config();
 
 const app = express();
 const PORT: number = 3000;
