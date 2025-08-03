@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword, comparePassword } from '../utils/password';
+import { generateJwtToken, verifyToken } from '../utils/jwt';
 
 import { User } from '../models/User';
 
 let hashPass: string;
+let user: User;
 
 export async function register (req: Request, res: Response): Promise<void> {
     try {
@@ -17,7 +19,7 @@ export async function register (req: Request, res: Response): Promise<void> {
 
         hashPass = await hashPassword(password);
         const id = uuidv4();
-        const user: User = { id, username, password: hashPass };
+        user = { id, username, password: hashPass };
         console.log(user);
         res.status(201).send({user})
     } catch (error) {
@@ -36,7 +38,9 @@ export async function login(req: Request, res: Response): Promise<void> {
         }
         const matchPass = await comparePassword(password, hashPass);
         if(matchPass) {
-            res.status(200).send({message: 'logged'});
+            const token = generateJwtToken(user);
+            console.log('verifyToken', verifyToken(token));
+            res.status(200).send({message: 'logged', token});
         } else {
             res.status(400).send({message: 'bad credentials'})
         }

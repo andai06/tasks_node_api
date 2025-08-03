@@ -5,12 +5,12 @@ import project from './routes/project';
 import task from './routes/task';
 import register from './routes/register';
 import login from './routes/login';
+import { authMiddleware } from './middleware/authMiddleware';
 
 const app = express();
 const PORT: number = 3000;
 
 app.set('view engine', 'pug');
-console.log('dirname', path.join(__dirname, 'views'));
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,8 +22,8 @@ app.get('/', (req: any, res: any) => {
 });
 
 
-app.use('/projects', project);
-app.use('/tasks', task);
+app.use('/projects', authMiddleware, project);
+app.use('/tasks', authMiddleware, task);
 app.use('/register', register);
 app.use('/login', login);
 

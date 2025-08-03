@@ -5,7 +5,7 @@ process.env.jwtSecret = 'FSDeghFQDy';
 const JWT_SECRET = process.env.jwtSecret;
 const JWT_EXPIRATION = "1h";
 
-interface UserPayload {
+export interface UserPayload {
     id: string;
     username: string;
 }
@@ -22,7 +22,7 @@ export function generateJwtToken(user: UserPayload): string {
 
 export function verifyToken(token: string): UserPayload | null {
     try {
-        const decoded = jwt.sign(token, JWT_SECRET) as unknown as UserPayload;
+        const decoded = jwt.verify(token, JWT_SECRET) as unknown as UserPayload;
         return decoded 
     } catch(e) {
         console.log(e);

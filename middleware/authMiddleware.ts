@@ -1,31 +1,29 @@
-// src/middleware/authMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwt';
+import { UserPayload, verifyToken } from '../utils/jwt';
 
-// Étendre l'interface Request d'Express pour y ajouter l'utilisateur décodé
-declare global {
-  namespace Express {
-    interface Request {
-      user?: { id: string; username: string };
-    }
-  }
+export interface AuthRequest extends Request {
+  user?: UserPayload;
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers['authorization'];
-  // Le token est généralement envoyé sous la forme "Bearer TOKEN_VALUE"
-  const token = authHeader && authHeader.split(' ')[1];
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+  const authHeaders = req.headers['authorization'];
+  console.log('authHeaders', authHeaders);
+  if(!authHeaders) {
+    res.status(401).send({ message: 'Authorization header missing' })
+  }
+  const token = authHeaders?.substring(7);
 
   if (!token) {
-    return res.status(401).json({ message: 'Accès refusé. Token non fourni.' });
+    res.status(401).send({ message: 'Missing token' });
+    return;
   }
 
-  const decodedUser = verifyToken(token);
-
-  if (!decodedUser) {
-    return res.status(403).json({ message: 'Token invalide ou expiré.' });
+  const payload = verifyToken(token);
+  if (!payload) {
+    res.status(401).send({ message: 'Invalid or expired token' });
+    return;
   }
 
-  req.user = decodedUser; // Attacher les infos utilisateur à l'objet Request
-  next(); // Passer au prochain middleware ou à la fonction de route
-};
+  req.user = payload;
+  next();
+}
