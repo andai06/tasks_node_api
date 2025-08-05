@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { IUser } from '../models/User';
 
 process.env.jwtSecret = 'FSDeghFQDy';
 
@@ -15,8 +16,12 @@ export interface UserPayload {
  * @param userPayload Informations about user ton include in a token.
  * @returns Signed JWT.
  */
-export function generateJwtToken(user: UserPayload): string {
-    return jwt.sign(user, JWT_SECRET, { expiresIn: JWT_EXPIRATION })
+export function generateJwtToken(user: IUser): string {
+    const payload: UserPayload = {
+        id: user.id,
+        username: user.username,
+    };
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRATION })
 
 }
 

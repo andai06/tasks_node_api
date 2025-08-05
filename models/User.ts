@@ -1,17 +1,19 @@
-export interface User {
-    id: string;
-    username: string;
-    password: string;
+import mongoose, { Document, Model } from 'mongoose';
+
+const { Schema } = mongoose;
+
+export interface IUser extends Document {
+  id: string;
+  username: string;
+  password: string;
 }
 
-const users: User[] = [];
+const userSchema = new Schema<IUser>({
+  id: String,
+  username: String,
+  password: String,
+});
 
-export async function findUserByUsername (username: string): Promise<User | undefined> {
-    return users.find(user => user.username === username );
-}
+const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
 
-export async function createUser(id: string, username: string, password: string): Promise<User> {
-   const user: User = {id, username, password};
-   users.push(user);
-   return user;
-}
+export default User
