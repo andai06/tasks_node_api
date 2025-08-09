@@ -6,16 +6,16 @@ import User, { IUser }  from '../models/User';
 
 export async function register (req: Request, res: Response): Promise<void> {
     try {
-        const { username, password } = req.body;
+        const { username, password, role } = req.body;
 
-        if (!username || !password) {
-            res.status(400).json({ error: 'Username and password are required' });
+        if (!username || !password || !role ) {
+            res.status(400).json({ error: 'all fields are required' });
             return;
         }
 
         const hashPass = await hashPassword(password);
 
-        const newUser: IUser = new User({ username, password: hashPass });  
+        const newUser: IUser = new User({ username, password: hashPass, role });  
         await newUser.save();
         res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
