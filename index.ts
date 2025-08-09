@@ -9,7 +9,13 @@ import login from './routes/login';
 import user from './routes/user';
 import { authMiddleware } from './middleware/authMiddleware';
 
+import { connectDb } from './config/database';
+
+
 dotenv.config();
+
+connectDb();
+
 
 const app = express();
 const PORT: number = 3000;

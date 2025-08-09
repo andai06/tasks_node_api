@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateJwtToken, UserPayload, verifyToken } from '../utils/jwt';
-import { connectDb } from '../config/database';
 import User, { IUser }  from '../models/User';
 
-connectDb();
 
 export async function register (req: Request, res: Response): Promise<void> {
     try {
@@ -17,9 +14,8 @@ export async function register (req: Request, res: Response): Promise<void> {
         }
 
         const hashPass = await hashPassword(password);
-        const id = uuidv4();
 
-        const newUser: IUser = new User({ id, username, password: hashPass });  
+        const newUser: IUser = new User({ username, password: hashPass });  
         await newUser.save();
         res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
